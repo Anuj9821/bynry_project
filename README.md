@@ -52,7 +52,7 @@ This is a Django-based web application developed for a gas utility company to ha
     ```
 
 5. **Access the app**:
-    Open your browser and go to `http://127.0.0.1:8000/`.
+    Open your browser and go to `http://127.0.0.1:8000/gas/submit`.
 
 ### Using Docker (Optional)
 
@@ -74,7 +74,7 @@ docker run -d -p 8000:8000 gas_utility_case_study
 
 5. **Access the app**:
 ```bash
-   Open your browser and go to `http://127.0.0.1:8000/`.
+   Open your browser and go to `http://127.0.0.1:8000/gas/submit`.
    ```
 
 ## Routes
