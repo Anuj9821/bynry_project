@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Request Detail</title>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Service Request Detail</h1>
+        <div class="service-request">
+            <h2>Request ID: {{ service_request.id }}</h2>
+            <p><strong>Customer Name:</strong> {{ service_request.customer_name }}</p>
+            <p><strong>Customer Phone:</strong> {{ service_request.customer_phone }}</p>
+            <p><strong>Request Type:</strong> {{ service_request.service_type }}</p>
+            <p><strong>Description:</strong> {{ service_request.details }}</p>
+            <p><strong>Status:</strong> {{ service_request.status }}</p>
+            <p><strong>Date Submitted:</strong> {{ service_request.created_at }}</p>
+        </div>
+        <a href="{% url 'list_service_requests' %}">Back to Service Requests</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Requests List</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Service Requests</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Customer Name</th>
+                    <th>Customer Phone</th>
+                    <th>Request Type</th>
+                    <th>Status</th>
+                    <th>Date Submitted</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in service_requests %}
+                <tr>
+                    <td>{{ request.id }}</td>
+                    <td>{{ request.customer_name }}</td>
+                    <td>{{ request.customer_phone}}</td>
+                    <td>{{ request.service_type }}</td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.created_at }}</td>
+                    <td>
+                        <a href="{% url 'service_request_detail' request.id %}">View</a>
+                        <!-- Add more actions as needed, like Edit, Delete, etc. -->
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No service requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'submit_service_request' %}">Create New Request</a>
+    </div>
+</body>
+</html>
