@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Service Requests</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Results</h1>
+
+        <!-- Search form -->
+        <form method="GET" action="{% url 'search_service_request' %}">
+            <input type="text" name="query" placeholder="Search by customer name or phone number" value="{{ query }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display results -->
+        <h2>Results for "{{ query }}"</h2>
+        {% if service_requests %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Customer Name</th>
+                        <th>Customer Phone</th>
+                        <th>Request Type</th>
+                        <th>Status</th>
+                        <th>Date Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in service_requests %}
+                    <tr>
+                        <td>{{ request.id }}</td>
+                        <td>{{ request.customer_name }}</td>
+                        <td>{{ request.customer_phone }}</td>
+                        <td>{{ request.get_service_type_display }}</td> <!-- Display choice label -->
+                        <td>{{ request.get_status_display }}</td> <!-- Display choice label -->
+                        <td>{{ request.created_at }}</td>
+                        <td>
+                            <a href="{% url 'service_request_detail' request.id %}">View</a>
+                            <a href="{% url 'update_service_request_status' request.id %}">Update Status</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No service requests found for "{{ query }}".</p>
+        {% endif %}
+
+        <a href="{% url 'list_service_requests' %}">Back to Service Requests</a>
+    </div>
+</body>
+</html>

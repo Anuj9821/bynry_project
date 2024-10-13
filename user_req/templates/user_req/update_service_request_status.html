@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Service Request Status</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Status for Request ID: {{ service_request.id }}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="status">Select New Status:</label>
+                <select name="status" id="status">
+                    {% for key, value in service_request.STATUS_CHOICES %}
+                        <option value="{{ key }}" {% if key == service_request.status %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit">Update Status</button>
+            </div>
+        </form>
+        <a href="{% url 'service_request_detail' service_request.id %}">Cancel</a>
+    </div>
+</body>
+</html>

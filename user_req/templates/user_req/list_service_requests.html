@@ -6,8 +6,10 @@
     <title>Service Requests List</title>
 </head>
 <body>
+    
     <div class="container">
         <h1>Service Requests</h1>
+
         <table>
             <thead>
                 <tr>
@@ -25,23 +27,24 @@
                 <tr>
                     <td>{{ request.id }}</td>
                     <td>{{ request.customer_name }}</td>
-                    <td>{{ request.customer_phone}}</td>
-                    <td>{{ request.service_type }}</td>
-                    <td>{{ request.status }}</td>
+                    <td>{{ request.customer_phone }}</td>
+                    <td>{{ request.get_service_type_display }}</td> <!-- Display choice label -->
+                    <td>{{ request.get_status_display }}</td> <!-- Display choice label -->
                     <td>{{ request.created_at }}</td>
                     <td>
                         <a href="{% url 'service_request_detail' request.id %}">View</a>
-                        <!-- Add more actions as needed, like Edit, Delete, etc. -->
+                        <a href="{% url 'update_service_request_status' request.id %}">Update Status</a>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6">No service requests found.</td>
+                    <td colspan="7">No service requests found.</td> <!-- Updated colspan to 7 -->
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         <a href="{% url 'submit_service_request' %}">Create New Request</a>
+        <a href="{% url 'search_service_request' %}">search Request</a>
     </div>
 </body>
 </html>

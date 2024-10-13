@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.db.models import Q
 # Create your views here.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
@@ -23,19 +23,6 @@ def service_request_detail(request, pk):
     service_request = get_object_or_404(ServiceRequest, pk=pk)
     return render(request, 'user_req/service_request_detail.html', {'service_request': service_request})
 
-# API view for tracking service requests (optional JSON response for status tracking)
-def track_service_request_status(request, pk):
-    service_request = get_object_or_404(ServiceRequest, pk=pk)
-    response_data = {
-        'customer_name': service_request.customer_name,
-        'service_type': service_request.get_service_type_display(),
-        'status': service_request.get_status_display(),
-        'created_at': service_request.created_at,
-        'updated_at': service_request.updated_at,
-        'resolved_at': service_request.resolved_at,
-    }
-    return JsonResponse(response_data)
-
 # View for customer support to see all service requests (optional, no login required)
 def list_service_requests(request):
     service_requests = ServiceRequest.objects.all().order_by('-created_at')
@@ -54,4 +41,18 @@ def update_service_request_status(request, pk):
             service_request.save()
             return redirect('service_request_detail', pk=service_request.pk)
 
-    return render(request, 'update_service_request_status.html', {'service_request': service_request})
+    return render(request, 'user_req/update_service_request_status.html', {'service_request': service_request})
+
+
+def search_service_request(request):
+    query = request.GET.get('query', None)
+    service_requests = []
+
+    if query:
+        # Search by customer name or phone number
+        service_requests = ServiceRequest.objects.filter(
+            Q(customer_name__icontains=query) | 
+            Q(customer_phone__icontains=query)
+        )
+
+    return render(request, 'user_req/search.html', {'service_requests': service_requests, 'query': query})

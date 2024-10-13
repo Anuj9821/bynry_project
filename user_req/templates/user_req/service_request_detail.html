@@ -17,6 +17,12 @@
             <p><strong>Description:</strong> {{ service_request.details }}</p>
             <p><strong>Status:</strong> {{ service_request.status }}</p>
             <p><strong>Date Submitted:</strong> {{ service_request.created_at }}</p>
+            {% if service_request.attachment %}
+                <p><strong>Attachment:</strong></p>
+                <img src="{{ service_request.attachment.url }}" alt="Attachment"> <!-- Correct URL for FileField -->
+            {% else %}
+                <p><strong>Attachment:</strong> None</p>
+            {% endif %}
         </div>
         <a href="{% url 'list_service_requests' %}">Back to Service Requests</a>
     </div>
